@@ -179,7 +179,7 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -inset-10 opacity-20">
@@ -189,7 +189,7 @@ function App() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div ref={heroRef} className="text-center max-w-4xl mx-auto opacity-0 translate-y-8">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
@@ -209,7 +209,7 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative w-full">
         <div className="max-w-7xl mx-auto">
           <div ref={servicesRef} className="text-center mb-16 opacity-0 translate-y-8">
             <h2 className="text-4xl font-bold text-white mb-4">
@@ -229,7 +229,7 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative w-full">
         <div className="max-w-4xl mx-auto">
           <div ref={contactRef} className="text-center mb-16 opacity-0 translate-y-8">
             <h2 className="text-4xl font-bold text-white mb-4">
@@ -245,7 +245,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8">
+      <footer className="border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
