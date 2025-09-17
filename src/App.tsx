@@ -10,10 +10,7 @@ import {
   Globe, 
   Briefcase, 
   Mail, 
-  Phone, 
-  MapPin,
   ArrowRight,
-  Sparkles,
   Zap
 } from 'lucide-react';
 import './App.css';
@@ -92,9 +89,9 @@ const ServiceCard = ({
   );
 };
 
+
 const ContactForm = () => {
   const ref = useScrollAnimation();
-  
   return (
     <div ref={ref} className="opacity-0 translate-y-8">
       <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm">
@@ -108,38 +105,40 @@ const ContactForm = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Input 
-                placeholder="Tu Nombre" 
-                className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
-              />
+          <form method="post" action="https://send.pageclip.co/{yourSiteKey}" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <Input 
+                  name="name"
+                  placeholder="Tu Nombre" 
+                  className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <Input 
+                  type="email"
+                  name="email"
+                  placeholder="Tu Email" 
+                  className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
+                />
+              </div>
             </div>
-            <div>
-              <Input 
-                type="email"
-                placeholder="Tu Email" 
-                className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-          <div>
             <Input 
+              name="subject"
               placeholder="Asunto" 
               className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
             />
-          </div>
-          <div>
             <Textarea 
+              name="message"
               placeholder="Cuéntanos sobre tu proyecto..."
               rows={4}
               className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500 resize-none"
             />
-          </div>
-          <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
-            Enviar Mensaje
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
+            <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
+              Enviar Mensaje
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </form>
         </CardContent>
       </Card>
     </div>
@@ -179,7 +178,7 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -inset-10 opacity-20">
@@ -189,7 +188,7 @@ function App() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div ref={heroRef} className="text-center max-w-4xl mx-auto opacity-0 translate-y-8">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
@@ -209,7 +208,7 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative w-full">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto">
           <div ref={servicesRef} className="text-center mb-16 opacity-0 translate-y-8">
             <h2 className="text-4xl font-bold text-white mb-4">
@@ -229,7 +228,7 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative w-full">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-4xl mx-auto">
           <div ref={contactRef} className="text-center mb-16 opacity-0 translate-y-8">
             <h2 className="text-4xl font-bold text-white mb-4">
@@ -245,7 +244,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8 w-full">
+      <footer className="border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
