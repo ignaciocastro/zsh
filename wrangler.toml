@@ -5,8 +5,3 @@ account_id = "09249c50fffa4a63949e85d627f4ff16" # <-- Add your Account ID here
 
 [site]
 bucket = "./dist"
-
-[[kv_namespaces]]
-binding = "SITE_ASSETS"
-id = "27697b74c28c460bbf871020c45c1b25" # <-- Add your KV Namespace ID here
-preview_id = "27697b74c28c460bbf871020c45c1b25"
