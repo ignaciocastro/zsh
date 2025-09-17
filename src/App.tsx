@@ -118,7 +118,7 @@ const ContactForm = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(form).toString(),
       });
-      if (res.ok) {
+      if ((res.status >= 200 && res.status < 300) || res.status === 302) {
         setSent(true);
         setForm({ name: '', email: '', subject: '', message: '' });
       } else {
