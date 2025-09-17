@@ -8,5 +8,5 @@ bucket = "./dist"
 
 [[kv_namespaces]]
 binding = "__STATIC_CONTENT"
-id = "27697b74c28c460bbf871020c45c1b25" # <-- Add your KV Namespace ID here
-preview_id = "27697b74c28c460bbf871020c45c1b25"
+id = "53698c999643497cb8409723f3a2f501" # <-- Add your KV Namespace ID here
+preview_id = "53698c999643497cb8409723f3a2f501"
