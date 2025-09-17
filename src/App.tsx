@@ -92,6 +92,44 @@ const ServiceCard = ({
 
 const ContactForm = () => {
   const ref = useScrollAnimation();
+  const [form, setForm] = React.useState({ name: '', email: '', subject: '', message: '' });
+  const [sending, setSending] = React.useState(false);
+  const [sent, setSent] = React.useState(false);
+  const [error, setError] = React.useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setError('');
+  };
+
+  const allFilled = form.name && form.email && form.subject && form.message;
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!allFilled) {
+      setError('Por favor completa todos los campos.');
+      return;
+    }
+    setSending(true);
+    setError('');
+    try {
+      const res = await fetch('https://send.pageclip.co/jD3KNbJ9bl1YFXHkTTAsSvKvPYvE9VzK/contact-form', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(form).toString(),
+      });
+      if (res.ok) {
+        setSent(true);
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setError('Hubo un error al enviar. Intenta nuevamente.');
+      }
+    } catch {
+      setError('Hubo un error al enviar. Intenta nuevamente.');
+    }
+    setSending(false);
+  };
+
   return (
     <div ref={ref} className="opacity-0 translate-y-8">
       <Card className="bg-slate-900/50 border-slate-800 backdrop-blur-sm">
@@ -105,12 +143,14 @@ const ContactForm = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <form method="post" action="https://send.pageclip.co/jD3KNbJ9bl1YFXHkTTAsSvKvPYvE9VzK/contact-form" className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Input 
                   name="name"
                   placeholder="Tu Nombre" 
+                  value={form.name}
+                  onChange={handleChange}
                   className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
                 />
               </div>
@@ -119,6 +159,8 @@ const ContactForm = () => {
                   type="email"
                   name="email"
                   placeholder="Tu Email" 
+                  value={form.email}
+                  onChange={handleChange}
                   className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
                 />
               </div>
@@ -126,17 +168,26 @@ const ContactForm = () => {
             <Input 
               name="subject"
               placeholder="Asunto" 
+              value={form.subject}
+              onChange={handleChange}
               className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
             />
             <Textarea 
               name="message"
               placeholder="Cuéntanos sobre tu proyecto..."
               rows={4}
+              value={form.message}
+              onChange={handleChange}
               className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500 resize-none"
             />
-            <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
-              Enviar Mensaje
-              <ArrowRight className="w-4 h-4 ml-2" />
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+            <Button
+              type="submit"
+              className={`w-full font-medium transition-all duration-300 ${sent ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white'} ${sending ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={!allFilled || sending || sent}
+            >
+              {sent ? '¡Enviado!' : sending ? 'Enviando...' : 'Enviar Mensaje'}
+              {!sent && <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </form>
         </CardContent>
