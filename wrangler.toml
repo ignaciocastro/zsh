@@ -1,0 +1,6 @@
+name = "zsh-site" # The name of your worker
+main = "workers-site/index.js"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./dist" # The directory where your built site is located
