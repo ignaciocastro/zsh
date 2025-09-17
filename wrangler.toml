@@ -1,6 +1,12 @@
-name = "zsh-site" # The name of your worker
+name = "zsh-site"
 main = "workers-site/index.js"
 compatibility_date = "2024-01-01"
+account_id = "09249c50fffa4a63949e85d627f4ff16" # <-- Add your Account ID here
 
 [site]
-bucket = "./dist" # The directory where your built site is located
+bucket = "./dist"
+
+[[kv_namespaces]]
+binding = "__STATIC_CONTENT"
+id = "27697b74c28c460bbf871020c45c1b25" # <-- Add your KV Namespace ID here
+preview_id = "27697b74c28c460bbf871020c45c1b25"
