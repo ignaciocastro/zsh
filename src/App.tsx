@@ -11,7 +11,6 @@ import {
   Briefcase, 
   Mail, 
   ArrowRight,
-  Zap
 } from 'lucide-react';
 import './App.css';
 
@@ -244,8 +243,42 @@ function App() {
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div ref={heroRef} className="text-center max-w-4xl mx-auto opacity-0 translate-y-8">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
-              zsh
+            <span className="inline-flex items-center">
+              <svg
+                width="60px"
+                height="60px"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                color="#ffffff"
+                className="w-16 h-16 text-white mr-6"
+              >
+                <path
+                  d="M11.5 7L9 12H15L12.5 17"
+                  stroke="#ffffff"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+                <path
+                  d="M20.8388 20.8391H17.3033M20.8388 20.8391V17.3035M20.8388 20.8391L17 17"
+                  stroke="#ffffff"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+                <path
+                  d="M2.76777 2.76788H6.3033M2.76777 2.76788V6.30341M2.76777 2.76788L6.60657 6.60693"
+                  stroke="#ffffff"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></path>
+              </svg>
+              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+                zsh
+              </span>
             </span>
             <br />
             <span className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-400">
@@ -301,8 +334,39 @@ function App() {
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <Zap className="w-4 h-4 text-white" />
-            </div>
+              <svg
+                  width="32px"
+                  height="32px"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  color="#ffffff"
+                  className="w-7 h-7 text-white"
+                >
+                  <path
+                    d="M11.5 7L9 12H15L12.5 17"
+                    stroke="#ffffff"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                  <path
+                    d="M20.8388 20.8391H17.3033M20.8388 20.8391V17.3035M20.8388 20.8391L17 17"
+                    stroke="#ffffff"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                  <path
+                    d="M2.76777 2.76788H6.3033M2.76777 2.76788V6.30341M2.76777 2.76788L6.60657 6.60693"
+                    stroke="#ffffff"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                </svg>
+              </div>
             <span className="text-2xl font-bold text-white">zsh</span>
           </div>
           <p className="text-slate-400 mb-4">
