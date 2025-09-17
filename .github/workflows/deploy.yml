@@ -18,7 +18,7 @@ jobs:
       - run: npm install
       - run: npm run build
       - name: Publish to Cloudflare Workers
-        uses: cloudflare/wrangler-action@latest
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
