@@ -41,15 +41,21 @@ async function handleEvent(event) {
         bypassCache: true,
       };
     }
+    
+// This tells the script to use the SITE_ASSETS binding
+    options.ASSET_NAMESPACE = SITE_ASSETS;
+    
     return await getAssetFromKV(event, options);
   } catch (e) {
     // if an error is thrown try to serve the asset at 404.html
     if (!DEBUG) {
       try {
-        let notFoundResponse = await getAssetFromKV(event, {
+        const notFoundOptions = {
+          ...options,
           mapRequestToAsset: (req) =>
             new Request(`${new URL(req.url).origin}/404.html`, req),
-        });
+        };
+        let notFoundResponse = await getAssetFromKV(event, notFoundOptions);
 
         return new Response(notFoundResponse.body, {
           ...notFoundResponse,
