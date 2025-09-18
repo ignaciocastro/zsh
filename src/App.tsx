@@ -263,7 +263,7 @@ function App() {
             aria-label="Select language"
             style={{ fontWeight: 500 }}
           >
-            <img src={currentLang.flag} alt={currentLang.code + ' flag'} className="w-6 h-6 rounded" />
+            <img src={currentLang.flag} alt={currentLang.code + ' flag'} className="w-6 h-6 rounded" fetchPriority="high" />
             {/* Only show flag and arrow, not name, when dropdown is open */}
             <svg className="w-4 h-4 ml-2 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
           </button>
@@ -279,7 +279,7 @@ function App() {
                         hover:bg-blue-900/40`}
                       style={{ fontWeight: i18n.language === lang.code ? 700 : 400 }}
                     >
-                      <img src={lang.flag} alt={lang.code + ' flag'} className="w-6 h-6 rounded mr-2" />
+                      <img src={lang.flag} alt={lang.code + ' flag'} className="w-6 h-6 rounded mr-2" fetchPriority="high" />
                       <span className="font-medium">{lang.name}</span>
                       {i18n.language === lang.code && <span className="ml-auto text-green-400">✔</span>}
                     </button>
