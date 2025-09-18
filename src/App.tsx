@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import './lib/i18n';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -55,7 +57,7 @@ const ServiceCard = ({
   features: string[];
 }) => {
   const ref = useScrollAnimation();
-  
+  const { t } = useTranslation();
   return (
     <div ref={ref} className="opacity-0 translate-y-8">
       <Card className="group h-full bg-slate-900/50 border-slate-800 hover:border-blue-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 backdrop-blur-sm">
@@ -64,10 +66,10 @@ const ServiceCard = ({
             <Icon className="w-6 h-6 text-white" />
           </div>
           <CardTitle className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-            {title}
+            {t(title)}
           </CardTitle>
           <CardDescription className="text-slate-400 leading-relaxed">
-            {description}
+            {t(description)}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -78,7 +80,7 @@ const ServiceCard = ({
                 variant="secondary" 
                 className="bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 transition-colors"
               >
-                {feature}
+                {t(feature)}
               </Badge>
             ))}
           </div>
@@ -91,6 +93,7 @@ const ServiceCard = ({
 
 const ContactForm = () => {
   const ref = useScrollAnimation();
+  const { t } = useTranslation();
   const [form, setForm] = React.useState({ name: '', email: '', subject: '', message: '' });
   const [sending, setSending] = React.useState(false);
   const [sent, setSent] = React.useState(false);
@@ -106,7 +109,7 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!allFilled) {
-      setError('Por favor completa todos los campos.');
+      setError(t('Por favor completa todos los campos.'));
       return;
     }
     setSending(true);
@@ -121,10 +124,9 @@ const ContactForm = () => {
         setSent(true);
         setForm({ name: '', email: '', subject: '', message: '' });
       } else {
-        setError('Hubo un error al enviar. Intenta nuevamente.');
+        setError(t('Hubo un error al enviar. Intenta nuevamente.'));
       }
     } catch (err) {
-      // If fetch throws (likely CORS/redirect), treat as success
       setSent(true);
       setForm({ name: '', email: '', subject: '', message: '' });
     }
@@ -137,10 +139,10 @@ const ContactForm = () => {
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">
             <Mail className="w-6 h-6 text-blue-500" />
-            Conectemos
+            {t('Conectemos')}
           </CardTitle>
           <CardDescription className="text-slate-400">
-            ¿Listo para transformar tu negocio? Ponte en contacto con nuestro equipo.
+            {t('¿Listo para transformar tu negocio? Ponte en contacto con nuestro equipo.')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -149,7 +151,7 @@ const ContactForm = () => {
               <div>
                 <Input 
                   name="name"
-                  placeholder="Tu Nombre" 
+                  placeholder={t('Tu Nombre')}
                   value={form.name}
                   onChange={handleChange}
                   className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
@@ -159,7 +161,7 @@ const ContactForm = () => {
                 <Input 
                   type="email"
                   name="email"
-                  placeholder="Tu Email" 
+                  placeholder={t('Tu Email')}
                   value={form.email}
                   onChange={handleChange}
                   className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
@@ -168,14 +170,14 @@ const ContactForm = () => {
             </div>
             <Input 
               name="subject"
-              placeholder="Asunto" 
+              placeholder={t('Asunto')}
               value={form.subject}
               onChange={handleChange}
               className="bg-slate-800/50 border-slate-700 text-white placeholder-slate-500 focus:border-blue-500"
             />
             <Textarea 
               name="message"
-              placeholder="Cuéntanos sobre tu proyecto..."
+              placeholder={t('Cuéntanos sobre tu proyecto...')}
               rows={4}
               value={form.message}
               onChange={handleChange}
@@ -187,7 +189,7 @@ const ContactForm = () => {
               className={`w-full font-medium transition-all duration-300 ${sent ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white'} ${sending ? 'opacity-50 cursor-not-allowed' : ''}`}
               disabled={!allFilled || sending || sent}
             >
-              {sent ? '¡Enviado!' : sending ? 'Enviando...' : 'Enviar Mensaje'}
+              {sent ? t('¡Enviado!') : sending ? t('Enviando...') : t('Enviar Mensaje')}
               {!sent && <ArrowRight className="w-4 h-4 ml-2" />}
             </Button>
           </form>
@@ -201,6 +203,7 @@ function App() {
   const heroRef = useScrollAnimation();
   const servicesRef = useScrollAnimation();
   const contactRef = useScrollAnimation();
+  const { t, i18n } = useTranslation();
 
   const services = [
     {
@@ -229,8 +232,65 @@ function App() {
     }
   ];
 
+  // Language Switcher Dropdown
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const languages = [
+    { code: 'es', name: 'Español', flag: '/es.svg' },
+    { code: 'en', name: 'English', flag: '/en.svg' }
+  ];
+  // Set initial language based on browser
+  React.useEffect(() => {
+    const browserLang = navigator.language?.slice(0, 2);
+    if (browserLang && languages.some(l => l.code === browserLang)) {
+      i18n.changeLanguage(browserLang);
+    }
+  }, []);
+  const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+
+  const handleLanguageChange = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setDropdownOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      {/* Language Switcher Dropdown */}
+      <div className="absolute top-6 right-8 z-50">
+        <div className="relative inline-block text-left">
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white shadow-lg min-w-[48px] focus:outline-none"
+            aria-label="Select language"
+            style={{ fontWeight: 500 }}
+          >
+            <img src={currentLang.flag} alt={currentLang.code + ' flag'} className="w-6 h-6 rounded" />
+            {/* Only show flag and arrow, not name, when dropdown is open */}
+            <svg className="w-4 h-4 ml-2 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+          </button>
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-44 rounded-lg shadow-lg z-50">
+              <ul className="py-2">
+                {languages.map(lang => (
+                  <li key={lang.code}>
+                    <button
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`flex items-center w-full px-4 py-2 text-left gap-2 rounded-lg transition-colors
+                        ${i18n.language === lang.code ? 'font-bold text-blue-300 bg-blue-800' : 'bg-slate-900 text-slate-200'}
+                        hover:bg-blue-900/40`}
+                      style={{ fontWeight: i18n.language === lang.code ? 700 : 400 }}
+                    >
+                      <img src={lang.flag} alt={lang.code + ' flag'} className="w-6 h-6 rounded mr-2" />
+                      <span className="font-medium">{lang.name}</span>
+                      {i18n.language === lang.code && <span className="ml-auto text-green-400">✔</span>}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -inset-10 opacity-20">
@@ -282,13 +342,12 @@ function App() {
             </span>
             <br />
             <span className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-400">
-              Innovación a Escala
+              {t('Innovación a Escala')}
             </span>
           </h1>
           
           <p className="text-xl text-slate-300 mb-12 leading-relaxed max-w-2xl mx-auto">
-            Ofrecemos soluciones integrales en consultoría, desarrollo web, 
-            importación y servicios de IA para acelerar el crecimiento de tu negocio.
+            {t('Ofrecemos soluciones integrales en consultoría, desarrollo web, importación y servicios de IA para acelerar el crecimiento de tu negocio.')}
           </p>
         </div>
       </section>
@@ -298,10 +357,10 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div ref={servicesRef} className="text-center mb-16 opacity-0 translate-y-8">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Nuestros <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Servicios</span>
+              {t('Nuestros')} <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">{t('Servicios')}</span>
             </h2>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Soluciones integrales diseñadas para impulsar tu negocio en la era digital
+              {t('Soluciones integrales diseñadas para impulsar tu negocio en la era digital')}
             </p>
           </div>
 
@@ -318,10 +377,10 @@ function App() {
         <div className="max-w-4xl mx-auto">
           <div ref={contactRef} className="text-center mb-16 opacity-0 translate-y-8">
             <h2 className="text-4xl font-bold text-white mb-4">
-              ¿Listo para <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Comenzar?</span>
+              {t('¿Listo para')} <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">{t('Comenzar?')}</span>
             </h2>
             <p className="text-xl text-slate-400">
-              Conversemos sobre cómo podemos ayudar a transformar tu negocio
+              {t('Conversemos sobre cómo podemos ayudar a transformar tu negocio')}
             </p>
           </div>
 
@@ -370,10 +429,10 @@ function App() {
             <span className="text-2xl font-bold text-white">zsh</span>
           </div>
           <p className="text-slate-400 mb-4">
-            Potenciando negocios a través de soluciones tecnológicas innovadoras
+            {t('Potenciando negocios a través de soluciones tecnológicas innovadoras')}
           </p>
           <p className="text-sm text-slate-500">
-            © 2025 zsh SpA. Todos los derechos reservados.
+            {t('© 2025 zsh SpA. Todos los derechos reservados.')}
           </p>
         </div>
       </footer>
