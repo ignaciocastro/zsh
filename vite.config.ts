@@ -16,4 +16,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  build: {
+    minify: 'terser', // Use Terser for JS minification
+  },
 });
